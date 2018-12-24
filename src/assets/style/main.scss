@@ -1,0 +1,59 @@
+.content {
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(
+        to right,
+        #009688 5%,
+        #607D8B 5%, #607D8B 100%
+    );
+    .header-left,.header-content,.header-right {
+        width: 33%;
+        height: 30px;
+    }
+    .header-left {
+        width: 24px;
+        height: 24px;
+        img {
+            width: 46px;
+        }
+    }
+    .header-content {
+        width: 80px;
+        line-height: 1.8;
+        span {
+            color: #FFF;
+        }
+    }
+}
+
+.stage {
+    position: relative;
+    width: 100%;
+    height: 680px;
+}
+
+.img-sec {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #ddd;
+}
+
+.controller-nav {
+    position: absolute;
+    left: 0;
+    bottom: 30px;
+    z-index: 101;
+    text-align: center;
+}
