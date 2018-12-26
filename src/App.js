@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Content from './components/content'
-// import './App.css';
-// import { throws } from 'assert';
+import Header from './components/header'
 require ('./assets/style/common.scss')
 
 class App extends Component {
@@ -14,8 +13,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <Header />
         <Content value="content" />
-        <h1>{this.props.name}</h1>
       </div>
     );
   }
