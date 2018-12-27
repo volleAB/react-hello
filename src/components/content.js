@@ -27,6 +27,13 @@ let getRangeRandom = (low, high) => {
 }
 
 /**
+ * 获取 0~30° 之间的一个任意正负值
+ */
+let get30DegRandom = () =>  {
+    return ((Math.random() > 0.5? '' : '-') + Math.ceil(Math.random() * 30))
+}
+
+/**
  * @class 单个图片信息
  */
 class ImgFigure extends Component {
@@ -39,8 +46,15 @@ class ImgFigure extends Component {
             styleObj = this.props.arrange.pos
         }
 
+        //如果图片有旋转角度，则使用
+        if(this.props.arrange.rotate) {
+            (['-moz-', '-ms-', '-webkit-', '']).forEach(function (value, index) {
+                    styleObj[value + 'transform'] = 'rotate(' + this.props.arrange.rotate + 'deg'
+                }.bind(this))
+        }
+
         return (
-            <figure className="img-figure">
+            <figure className="img-figure" style={styleObj}>
                 <img src={this.props.data.imageURL} alt={this.props.data.fileName}/>
                 <figcaption>
                     <h2 className="img-title">{this.props.data.title}</h2>
@@ -55,13 +69,14 @@ class Content extends Component {
         super(props)
         this.state = {
             title: 'Content',
-            imgArrangeArr: [
+            imgsArrangeArr: [
                 {
                     pos: {
-                        left: '0',
-                        top: '0'
-                    }
-                }
+                        left: 0,
+                        top: 0
+                    },
+                    rotate: 0   //旋转角度
+                },
             ]
         }
     }
@@ -101,17 +116,22 @@ class Content extends Component {
             halfImgW = Math.ceil(imgW / 2),
             halfImgH = Math.ceil(imgH / 2)
 
+        // console.log([imgW, imgH])
+        console.log([halfImgW, halfImgH, halfStageW])
+
         //计算中心图片的位置点
         this.Constant.centerPos = {
             left: halfStageW - halfImgW,
-            top: halfImgH - halfImgH
+            top: halfStageH - halfImgH
         }
+
+        // console.log(this.Constant.centerPos)
 
         //计算左侧、右侧区域图片排布位置的取值范围
         this.Constant.hPosRange.leftSecX[0] = -halfImgW
-        this.Constant.hPosRange.leftSecX[1] = halfImgW - halfImgW * 3
+        this.Constant.hPosRange.leftSecX[1] = halfStageW - halfImgW * 3
 
-        this.Constant.hPosRange.rightSecX[0] = halfStageW = halfImgW
+        this.Constant.hPosRange.rightSecX[0] = halfStageW + halfImgW
         this.Constant.hPosRange.rightSecX[1] = stageW - halfImgW
         this.Constant.hPosRange.y[0] = -halfImgH
         this.Constant.hPosRange.y[1] = stageH - halfImgH
@@ -119,8 +139,8 @@ class Content extends Component {
         //计算上侧区域图片排布位置的取值范围
         this.Constant.vPosRange.topY[0] = -halfImgH
         this.Constant.vPosRange.topY[1] = halfStageH - halfImgH * 3
-        this.Constant.vPosRange.x[0] = halfImgW - imgW
-        this.Constant.vPosRange.x[1] = halfImgW
+        this.Constant.vPosRange.x[0] = halfStageW - imgW
+        this.Constant.vPosRange.x[1] = halfStageW
 
         this.rearrange(0)
     }
@@ -137,52 +157,66 @@ class Content extends Component {
      * @param {Number} centerIndex 指定居中排布哪个图片
      */
     rearrange(centerIndex) {
-        let imgsArrangeArr = this.stage.imgArrangeArr,
+        let imgsArrangeArr = this.state.imgsArrangeArr,
             Constant = this.Constant,
             centerPos = Constant.centerPos,
             hPosRange = Constant.hPosRange,
             vPosRange = Constant.vPosRange,
             hPosRangeLeftSecX = hPosRange.leftSecX,
-            hPosRangeRightSecX = hPosRange.rightSexX,
+            hPosRangeRightSecX = hPosRange.rightSecX,
             hPosRangeY = hPosRange.y,
             vPosRangeTopY = vPosRange.topY,
             vPosRangeX = vPosRange.x,
 
             imgsArrangeTopArr = [],
-            topImgNum = Math.ceil(Math.random() * 2),   //取一个或者不取
+            topImgNum = Math.floor(Math.random() * 2),   //取一个或者不取
             topImgSpliceIndex = 0,
 
             imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1)
+            // console.log(hPosRangeRightSecX)
 
             //首先居中 centerIndex 的图片
             imgsArrangeCenterArr[0].pos = centerPos
 
+            //居中图片不需要旋转
+            imgsArrangeCenterArr.rotate = 0
+
             //取出要布局上侧的图片的状态信息
             topImgSpliceIndex = Math.ceil(Math.random() * (imgsArrangeArr.length - topImgNum))
             imgsArrangeTopArr = imgsArrangeArr.splice(topImgSpliceIndex, topImgNum)
+            // console.log(topImgNum)
 
             //布局位于上侧的图片
             imgsArrangeTopArr.forEach((value, index) => {
-                imgsArrangeTopArr[index].pos = {
-                    top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
-                    left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+                imgsArrangeTopArr[index] = {
+                    pos: {
+                        top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
+                        left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
+                    },
+                    rotate: get30DegRandom()
                 }
             })
 
             //布局左右两侧的图片
-            for(let i = 0, j = imgsArrangeArr.length, k = j / 2; i < j; i++) {
+            // console.log(imgsArrangeArr.length)
+            for(let i = 0, j = imgsArrangeArr.length, k = Math.floor(j / 2); i < j; i++) {
                 let hPosRangeLORX = null
-                
+
                 if(i < k) {
                     hPosRangeLORX = hPosRangeLeftSecX
                 } else {
                     hPosRangeLORX = hPosRangeRightSecX
                 }
 
-                imgsArrangeArr[i].pos = {
-                    top: getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
-                    left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
+                imgsArrangeArr[i] = {
+                    pos: {
+                        top: getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
+                        left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
+                    },
+                    rotate: get30DegRandom()
                 }
+
+                // console.log(i)
             }
 
             if(imgsArrangeTopArr && imgsArrangeTopArr[0]) {
@@ -201,12 +235,13 @@ class Content extends Component {
 
         imageDatas.forEach(function (value, index) {
 
-            if(!this.state.imgArrangeArr[index]) {
-                this.stage.imgArrangeArr[index] = {
+            if(!this.state.imgsArrangeArr[index]) {
+                this.state.imgsArrangeArr[index] = {
                     pos: {
                         left: 0,
                         top: 0
-                    }
+                    },
+                    rotate: 0
                 }
             }
 
