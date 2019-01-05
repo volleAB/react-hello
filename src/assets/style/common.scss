@@ -1,6 +1,14 @@
 /*
   common.scss
 */
+@font-face {
+  font-family: 'icons-turn-arrow';
+  src: url('../icon/turn-arrow.eot') format('enbedded'),
+       url('../icon/turn-arrow.woff') format('woff'),
+       url('../icon/turn-arrow.ttf') format('truetype'),
+       url('../icon/turn-arrow.svg') format('svg');
+}
+
 body {
   margin: 0;
   padding: 0;

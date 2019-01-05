@@ -1,21 +1,12 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import ImgFigure from './imgFigure'
+import ControllerUnit from './controllerUnit'
 
 let imageDatas = require('../assets/data/imageDatas.json')
 require('../assets/style/main.scss')
 
 let imageDatasArr = []
-
-// let ImgFigure = (props) => {
-//     return (
-//         <figure className="img-figure">
-//             <img src={props.data.imageURL} alt={props.data.fileName}/>
-//             <figcaption>
-//                 <h2 className="img-title">{props.data.title}</h2>
-//             </figcaption>
-//         </figure>
-//     )
-// }
 
 /**
  * 获取区间内的一个随机值
@@ -33,37 +24,6 @@ let get30DegRandom = () =>  {
     return ((Math.random() > 0.5? '' : '-') + Math.ceil(Math.random() * 30))
 }
 
-/**
- * @class 单个图片信息
- */
-class ImgFigure extends Component {
-    render() {
-
-        let styleObj = {}
-
-        //如果props属性中指定了这张图片的位置，则使用
-        if(this.props.arrange.pos) {
-            styleObj = this.props.arrange.pos
-        }
-
-        //如果图片有旋转角度，则使用
-        if(this.props.arrange.rotate) {
-            (['-moz-', '-ms-', '-webkit-', '']).forEach(function (value, index) {
-                    styleObj[value + 'transform'] = 'rotate(' + this.props.arrange.rotate + 'deg'
-                }.bind(this))
-        }
-
-        return (
-            <figure className="img-figure" style={styleObj}>
-                <img src={this.props.data.imageURL} alt={this.props.data.fileName}/>
-                <figcaption>
-                    <h2 className="img-title">{this.props.data.title}</h2>
-                </figcaption>
-            </figure>
-        )
-    }
-}
-
 class Content extends Component {
     constructor(props) {
         super(props)
@@ -75,7 +35,9 @@ class Content extends Component {
                         left: 0,
                         top: 0
                     },
-                    rotate: 0   //旋转角度
+                    rotate: 0,   //旋转角度
+                    isInverse: false,
+                    isCenter: false
                 },
             ]
         }
@@ -117,7 +79,7 @@ class Content extends Component {
             halfImgH = Math.ceil(imgH / 2)
 
         // console.log([imgW, imgH])
-        console.log([halfImgW, halfImgH, halfStageW])
+        // console.log([halfImgW, halfImgH, halfStageW])
 
         //计算中心图片的位置点
         this.Constant.centerPos = {
@@ -144,7 +106,39 @@ class Content extends Component {
 
         this.rearrange(0)
     }
-    imageDatas = (() => {   //利用自执行函数获取图片信息
+    /**
+     * 翻转图片
+     * @param index 输入当前被执行inverse操作的图片对应的图片信息数组的index值
+     * @return {Function} 这是一个闭包函数，其内return一个真正待被执行的函数
+     */
+    inverse(index) {
+        return function () {
+            let imgsArrangeArr = this.state.imgsArrangeArr
+
+            imgsArrangeArr[index].isInverse = !imgsArrangeArr[index].isInverse
+
+            this.setState({
+                imgsArrangeArr: imgsArrangeArr
+            })
+            // console.log(index)
+            // alert(this.state.title)
+        }.bind(this)
+    }
+
+    /**
+     * 利用rearrange函数，居中对应index的图片
+     * @param {Number} centerIndex 需要被居中的图片对应的图片信息数组的index值
+     */
+    center(index) {
+        return function () {
+            this.rearrange(index)
+        }.bind(this)
+    }
+
+    /**
+     * 利用自执行函数获取图片信息
+     */
+    imageDatas = (() => {
         for(let item of imageDatas) {
             let singleImageData = item
             singleImageData.imageURL = require('../assets/images/' + singleImageData.fileName)
@@ -175,11 +169,12 @@ class Content extends Component {
             imgsArrangeCenterArr = imgsArrangeArr.splice(centerIndex, 1)
             // console.log(hPosRangeRightSecX)
 
-            //首先居中 centerIndex 的图片
-            imgsArrangeCenterArr[0].pos = centerPos
-
-            //居中图片不需要旋转
-            imgsArrangeCenterArr.rotate = 0
+            //首先居中 centerIndex 的图片，居中图片不需要旋转
+            imgsArrangeCenterArr[0] = {
+                pos: centerPos,
+                rotate: 0,
+                isCenter: true
+            }
 
             //取出要布局上侧的图片的状态信息
             topImgSpliceIndex = Math.ceil(Math.random() * (imgsArrangeArr.length - topImgNum))
@@ -193,7 +188,8 @@ class Content extends Component {
                         top: getRangeRandom(vPosRangeTopY[0], vPosRangeTopY[1]),
                         left: getRangeRandom(vPosRangeX[0], vPosRangeX[1])
                     },
-                    rotate: get30DegRandom()
+                    rotate: get30DegRandom(),
+                    isCenter: false
                 }
             })
 
@@ -213,7 +209,8 @@ class Content extends Component {
                         top: getRangeRandom(hPosRangeY[0], hPosRangeY[1]),
                         left: getRangeRandom(hPosRangeLORX[0], hPosRangeLORX[1])
                     },
-                    rotate: get30DegRandom()
+                    rotate: get30DegRandom(),
+                    isCenter: false
                 }
 
                 // console.log(i)
@@ -232,7 +229,8 @@ class Content extends Component {
     render() {
         let controllerUnits = [],
             imgFigures = []
-
+        // console.log(this.state.imgsArrangeArr)
+        // console.log('1')
         imageDatas.forEach(function (value, index) {
 
             if(!this.state.imgsArrangeArr[index]) {
@@ -241,12 +239,28 @@ class Content extends Component {
                         left: 0,
                         top: 0
                     },
-                    rotate: 0
+                    rotate: 0,
+                    isInverse: false,
+                    isCenter: false
                 }
             }
 
-            imgFigures.push(<ImgFigure data={value} key={index} ref={"imgFigure" + index} arrange={this.state.imgsArrangeArr[index]}/>)
+            imgFigures.push(
+                <ImgFigure 
+                    data={value} 
+                    key={index} 
+                    ref={"imgFigure" + index} 
+                    arrange={this.state.imgsArrangeArr[index]} 
+                    inverse={this.inverse(index)}
+                    center={this.center(index)}
+                />
+            )
+
+            controllerUnits.push(
+                <ControllerUnit/>
+            )
         }.bind(this))
+
         return (
             <div className="content">
                 <section className="stage" ref="stage">
