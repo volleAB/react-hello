@@ -216,6 +216,8 @@ class Content extends Component {
                 // console.log(i)
             }
 
+            // debugger
+
             if(imgsArrangeTopArr && imgsArrangeTopArr[0]) {
                 imgsArrangeArr.splice(topImgSpliceIndex, 0, imgsArrangeTopArr[0])
             }
@@ -257,7 +259,12 @@ class Content extends Component {
             )
 
             controllerUnits.push(
-                <ControllerUnit/>
+                <ControllerUnit
+                    key={index} 
+                    arrange={this.state.imgsArrangeArr[index]}
+                    inverse={this.inverse(index)}
+                    center={this.center(index)}
+                />
             )
         }.bind(this))
 
