@@ -5,6 +5,7 @@
     height: 100%;
 }
 
+/* stage -- start */
 .header {
     position: fixed;
     top: 0;
@@ -19,25 +20,46 @@
         #009688 5%,
         #607D8B 5%, #607D8B 100%
     );
-    .header-left,.header-content,.header-right {
-        width: 33%;
-        height: 30px;
-    }
-    .header-left {
-        min-width: 24px;
-        height: 24px;
-        img {
-            width: 46px;
+    @at-root {
+        .header-left,.header-content,.header-right {
+            width: 33%;
+            height: 30px;
         }
-    }
-    .header-content {
-        width: 80px;
-        line-height: 1.8;
-        span {
-            color: #FFF;
+        .header-left {
+            min-width: 24px;
+            height: 24px;
+            cursor: pointer;
+            img {
+                width: 46px;
+            }
+            .nav {
+                position: absolute;
+                top: 30px;
+                left: -240px;
+                width: 220px;
+                height: 100vh;
+                margin: 0;
+                padding: 10px 0 20px 20px;
+                border-radius: 0% 0% 2% 0%;
+                background-color: #555;
+                transition: left .6s ease-in-out, background-color .6s ease;
+                li {
+                    list-style: none;
+                    padding-bottom: 8px;
+                    border-bottom: 1px solid #000;
+                }
+            }
+        }
+        .header-content {
+            width: 80px;
+            line-height: 1.8;
+            span {
+                color: #FFF;
+            }
         }
     }
 }
+/* stage -- end */
 
 /* stage -- start */
 .stage {

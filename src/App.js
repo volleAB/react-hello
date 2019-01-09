@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Content from './components/content'
-import Header from './components/header'
+import Route from './router'
+
 require ('./assets/style/common.scss')
 
 class App extends Component {
@@ -13,8 +13,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
-        <Content value="content" />
+        <Route />
       </div>
     );
   }
