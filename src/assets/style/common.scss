@@ -40,3 +40,29 @@ a {
   height: 100vh;
   background-color: #282c34;
 }
+
+.home {
+  margin-top: 30px;
+}
+
+.test {
+  margin-top: 30px;
+}
+
+.about {
+  margin-top: 30px;
+}
+
+.topics {
+  margin-top: 30px;
+}
+
+.fade-enter {
+  opacity: 0;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}

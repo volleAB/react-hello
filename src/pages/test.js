@@ -1,16 +1,46 @@
 import React, { Component } from 'react'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+
+require('../assets/style/test.scss')
 
 class Test extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      title: 'Test'
+      title: 'Test',
+      list: []
     }
+  }
+  toggleState() {
+    console.log('123')
+  }
+  handleClick() {
+    this.setState((prevState)=>{
+      return{
+          list: [...prevState.list,'666']
+      }
+    })
   }
   render() {
     return (
-      <div className="Test">
-        <h1>Test</h1>
+      <div className="test">
+        <h2>Test</h2>
+        <button onClick={this.toggleState}>click</button>
+        {/*第一个例子*/}
+        <CSSTransition
+          in={this.state.show}
+          classNames={{
+            enter: 'animated',
+            enterActive: 'bounceIn',
+            exit: 'animated',
+            exitActive: 'bounceOut'
+          }}
+          timeout={500}
+          mountOnEnter={true}
+          unmountOnExit={true}
+        >
+          <div className="box" />
+        </CSSTransition>
       </div>
     );
   }

@@ -29,8 +29,11 @@ class Header extends Component {
                 <div className="header-left" onClick={this.handleClick.bind(this)}>
                     <img src={logo} alt="logo"></img>
                     <ul className='nav' style={navStyle}>
-            　　　　　　<li><Link to="/">App</Link></li>
-            　　　　　　<li><Link to="/test">Test</Link></li>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/gallery">Gallery</Link></li>
+                        <li><Link to="/about">About</Link></li>
+                        <li><Link to='/topics'>Topics</Link></li>
+                        <li><Link to="/test">Test</Link></li>
         　　 　　　　</ul>
                 </div>
                 <div className="header-content"><span>{this.state.title}</span></div>
