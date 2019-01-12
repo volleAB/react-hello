@@ -1,3 +1,22 @@
+# react-hello
+
+> [vue-hello](https://github.com/volleAB/vue-hello)
+模仿卖座网的一个vue项目
+
+## 技术栈：
+    react + redux + webpack + react-router + ES6/7/8 + scss
+
+> 使用create-react-app搭建项目
+
+## 运行项目（nodejs 6.0+）
+``` bash
+git clone https://github.com/volleAB/react-hello.git
+cd react-hello
+npm install 
+npm start
+npm run build
+```
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

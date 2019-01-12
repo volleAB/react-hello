@@ -11,6 +11,11 @@ class Test extends Component {
       list: []
     }
   }
+  componentDidMount() {
+    // store.subscribe(() =>
+    //   console.log(store.getState())
+    // ) ;
+  }
   toggleState() {
     console.log('123')
   }
