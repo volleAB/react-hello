@@ -260,7 +260,7 @@ class Content extends Component {
 
             controllerUnits.push(
                 <ControllerUnit
-                    key={index} 
+                    key={index}
                     arrange={this.state.imgsArrangeArr[index]}
                     inverse={this.inverse(index)}
                     center={this.center(index)}

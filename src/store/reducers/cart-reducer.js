@@ -3,14 +3,14 @@ import * as actions from '../actions/cart-actions'
 const initialState = {
     cart: [
         {
-        product: 'bread 700g',
-        quantity: 2,
-        unitCost: 90
+            product: 'bread 700g',
+            quantity: 2,
+            unitCost: 90
         },
         {
-        product: 'milk 500ml',
-        quantity: 1,
-        unitCost: 47
+            product: 'milk 500ml',
+            quantity: 1,
+            unitCost: 47
         }
     ]
 }
@@ -22,12 +22,12 @@ const initialState = {
  */
 export const counterReducer = function(state = 0, action) {
     switch (action.type) {
-      case 'INCREMENT':
-        return state + 1
-      case 'DECREMENT':
-        return state - 1
-      default:
-        return state
+        case 'INCREMENT':
+            return state + 1
+        case 'DECREMENT':
+            return state - 1
+        default:
+            return state
     }
 }
 

@@ -17,7 +17,7 @@ class Test extends Component {
     // ) ;
   }
   toggleState() {
-    console.log('123')
+    // store.dispatch(addToCart('Juice 2L', 1, 250))
   }
   handleClick() {
     this.setState((prevState)=>{
