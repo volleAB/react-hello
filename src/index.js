@@ -10,7 +10,7 @@ import store from './store'
 
 ReactDOM.render(
     <Provider store={store}>
-        <App name='Home' />
+        <App name='App' />
     </Provider>, 
     document.getElementById('root')
 );

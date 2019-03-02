@@ -1,0 +1,19 @@
+.home {
+    @at-root {
+        h2 {
+            padding: 10px 0;
+            text-align: center;
+            color: #fff;
+        }
+        .container {
+            width: 80%;
+            padding: 10px;
+            margin: 20px auto;
+            border-radius: 4px;
+            background: linear-gradient(
+                to bottom,
+                orange 20%,rgb(240, 163, 64), rgb(255, 230, 120) 20%
+            )
+        }
+    }
+}

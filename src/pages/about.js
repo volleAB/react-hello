@@ -1,7 +1,7 @@
 /* eslint-disable react/no-direct-mutation-state */
 import React , { Component } from 'react'
+import api from '../api/index';
 import axios from 'axios'
-import { link } from 'fs';
 
 class About extends Component{
     constructor(props) {
@@ -9,8 +9,10 @@ class About extends Component{
         this.state = {
             title: 'About',
             count: 1,
-            msg: []
+            info: []
         }
+        this.ulRefs = React.createRef()
+        this.msg = []
     }
     handleClick(e) {
         this.setState({
@@ -19,42 +21,51 @@ class About extends Component{
         e.preventDefault()
         e.stopPropagation()
     }
+    showMsg(arr) {
+        let li = arr[0]
+        this.setState({
+            info: li
+        })
+        console.log(this.state.info)
+    }
+    getMsg() {
+        axios.get('http://119.23.47.10/dachuang/brief/')
+        // api.getArticle()
+            .then((res) => {
+                let msg = res.data.mes
+                this.showMsg(msg)
+            })
+    }
     componentWillMount() {
         console.log('State:' + this.state)
         console.log('componentWillMount')
     }
     componentDidMount() {
         console.log('State:' + this.state)
-        axios.get('http://119.23.47.10/dachuang/brief/')
-        .then((res) => {
-            this.setState({
-                msg: res.data.msg
-            })
-        })
+        this.getMsg()
         console.log('componentDidMount')
     }
+    
     render() {
-        const msg = this.state.msg
-        console.log(msg)
         return (
             <div className='about'>
                 <h2>About</h2>
                 <h4>{this.title}</h4>
-                <h4>{this.props.value}</h4>
                 <h4>{this.state.count}</h4>
                 <button onClick={this.handleClick.bind(this)}>add</button>
                 <div className='list'>
-                    <ul>
-                        {/* {msg.map((item) => 
+                    <ul ref={this.ulRefs}>
+                        {this.state.info.map((item) => 
                             <li key={item.id}>
-                                {item.title}
+                                {item.title} —————————— {item.time}
                             </li>
-                        )} */}
+                        )}
                     </ul>
                 </div>
             </div>
         )
     }
 }
+
 
 export default About
