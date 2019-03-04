@@ -14,10 +14,20 @@ const initialState = {
             situation: 'yellow',
             isCompleted: true
         }
+    ],
+    posts: [
+        {
+            title: '你好',
+            id: 2
+        },
+        {
+            title: '好的',
+            id: 3
+        }
     ]
 }
 
-export const todoReducer = (state = initialState, action) => {
+export const todoReducers = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_TODO':
             return {
@@ -28,6 +38,11 @@ export const todoReducer = (state = initialState, action) => {
             return state.map(todo =>
                 todo.id === action.id ? { ...todo, completed: !todo.completed } : todo
             )
+        case 'LOAD_POSTS':
+            return {
+                ...state,
+                posts: [...state.posts, action.payload]
+            }
         default :
             return state
     }

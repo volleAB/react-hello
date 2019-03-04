@@ -1,15 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function TodoItem(onClick, isCompleted, text) {
+function TodoItem(props) {
     return (
-        <div>
-            <ul>
-                <li onClick={onClick} style={{textDecoration: isCompleted ? 'line-through' : 'none'}}>
-                    {text}
-                </li>
-            </ul>
-        </div>
+        <li onClick={props.onClick} style={{textDecoration: props.isCompleted ? 'line-through' : 'none'}}>
+            {props.text}
+        </li>
     )
 }
 

@@ -1,14 +1,19 @@
 import store from './store.js'
 import { addToCart, updateCart, deleteFromCart }  from './actions/cart-actions'
-import { addTodo, setVisibilityFilter, toggleTodo }  from './actions/todo-actions'
+import { addTodo, setVisibilityFilter, toggleTodo, getPOSTS }  from './actions/todo-actions'
+
 
 console.log("initial state: ", store.getState())
+
+
 
 let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
   );
 
 store.dispatch(addTodo('coffee', '2019-1-1'))
+
+store.dispatch(getPOSTS)
 
 // store.dispatch(addToCart('Coffee 500gm', 1, 250))
 // store.dispatch(addToCart('Flour 1kg', 2, 110))

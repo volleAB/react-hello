@@ -1,4 +1,10 @@
+import { get } from 'axios'
+
 let nextTodoId = 3
+
+const getPosts = () => {
+    return get('http://jsonplaceholder.typicode.com/posts/1')
+  }
 /**
  * 添加todo事件
  * @param {String} title 事件
@@ -23,6 +29,14 @@ export const toggleTodo = id => ({
     type: 'TOGGLE_TODO',
     id
 })
+
+export const getPOSTS = async (dispatch) => {
+    const res = await getPosts()
+    dispatch({
+        type: 'LOAD_POSTS',
+        payload: res.data
+    })
+}
   
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
