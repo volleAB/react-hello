@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { resolve } from 'url';
 
 // let instance = axios.create({
 //     baseURL: 'http://119.23.47.10/dachuang',

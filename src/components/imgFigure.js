@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component } from 'react'
 
 // ----------添加图片组件，搭建图片结构

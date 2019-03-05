@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import React, { Fragment } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 // import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import asyncComponent from '../utils/asyncComponent'
 import Header from '../components/header'

@@ -2,17 +2,26 @@
   common.scss
 */
 @font-face {
-  font-family: 'icons-turn-arrow';
-  src: url('../icon/turn-arrow.eot') format('enbedded'),
-       url('../icon/turn-arrow.woff') format('woff'),
-       url('../icon/turn-arrow.ttf') format('truetype'),
-       url('../icon/turn-arrow.svg') format('svg');
+  font-family:  'icons-turn-arrow';
+  src:  url('../icon/turn-arrow.eot') format('enbedded'),
+      url('../icon/turn-arrow.woff') format('woff'),
+      url('../icon/turn-arrow.ttf') format('truetype'),
+      url('../icon/turn-arrow.svg') format('svg');
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "liga", "kern";
+  font-family: sans-serif;
+  overflow: hidden;
 }
 
 body {
   margin: 0;
   padding: 0;
   overflow-y: hidden;
+  font-family: 'Varela Round', sans-serif;
 }
 
 h1,h2,h3,p {

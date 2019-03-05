@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 function TodoItem(props) {
     return (
-        <li onClick={props.onClick} style={{textDecoration: props.isCompleted ? 'line-through' : 'none'}}>
-            {props.text}
+        <li onClick={props.deleteOnClick} style={{textDecoration: props.isCompleted ? 'line-through' : 'none'}}>
+            {props.title}   ---  {props.startDate}
         </li>
     )
 }

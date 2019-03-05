@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const initialState = {
     todoList: [
         {
@@ -18,11 +20,7 @@ const initialState = {
     posts: [
         {
             title: '你好',
-            id: 2
-        },
-        {
-            title: '好的',
-            id: 3
+            id: 0
         }
     ]
 }
@@ -34,6 +32,17 @@ export const todoReducers = (state = initialState, action) => {
                     ...state,
                     todoList: [...state.todoList, action.payload]
                 }
+        case 'DELETE_TODO': 
+            let newState = state.todoList
+            newState.map(item => {
+                if(action.id == item.id) {
+                    item.isCompleted = true
+                }
+            })
+            return {
+                ...state,
+                todoList: [...newState]
+            }
         case 'TOGGLE_TODO':
             return state.map(todo =>
                 todo.id === action.id ? { ...todo, completed: !todo.completed } : todo

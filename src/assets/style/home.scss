@@ -1,19 +1,76 @@
 .home {
+    overflow: auto;
     @at-root {
         h2 {
             padding: 10px 0;
             text-align: center;
-            color: #fff;
+            color: #000;
         }
         .container {
-            width: 80%;
+            width: 50%;
+            max-width: 500px;
+            min-width: 400px;
             padding: 10px;
             margin: 20px auto;
+            margin-top: 60px;
             border-radius: 4px;
             background: linear-gradient(
                 to bottom,
-                orange 20%,rgb(240, 163, 64), rgb(255, 230, 120) 20%
-            )
+                orange 2em,
+                orange 2em, rgb(240, 163, 64) 4em, rgb(255, 230, 120) 6em,
+            );
+            box-shadow: 0px 0px 6px 0px #ffeb3bd4;
+            ul {
+                margin: 8px;
+                padding: 12px;
+            }
+            li {
+                padding: 12px 0;
+                border-bottom: 2px solid #fc6262;
+                list-style: none;
+                cursor: pointer;
+            }
+            .todos {
+                padding: 20px;
+                ul {
+                    max-height: 300px;
+                    overflow-y: scroll;
+                }
+            }
+            .addTodo {
+                position: relative;
+                padding: 0 42px;
+                input {
+                    box-sizing: border-box;
+                    width: 100%;
+                    padding: 6px 10px;
+                    border: none;
+                    border-radius: 8px; 
+                    margin: 20px auto;
+                    margin-top: 0;
+                    background-color: #d2d2d2;
+                    font-size: 24px;
+                    color: #000;
+                    &:focus {
+                        outline: none;
+                    }
+                }
+                .sub {
+                    position: absolute;
+                    top: -10px;
+                    right: 20px;
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    text-align: center;
+                    line-height: 2.8;
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: #FF5722;
+                    background-color: aquamarine;
+                    transition: all 1s ease-in-out;
+                }
+            }
         }
     }
 }

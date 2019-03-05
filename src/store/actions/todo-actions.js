@@ -37,6 +37,11 @@ export const getPOSTS = async (dispatch) => {
         payload: res.data
     })
 }
+
+export const deleteTodo = id => ({
+    type: 'DELETE_TODO',
+    id
+})
   
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',

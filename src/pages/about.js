@@ -1,6 +1,5 @@
 /* eslint-disable react/no-direct-mutation-state */
 import React , { Component } from 'react'
-import api from '../api/index';
 import axios from 'axios'
 
 class About extends Component{
