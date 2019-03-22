@@ -5,9 +5,11 @@ import TodoItem from '../components/todoItem'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { addTodo, getPOSTS, deleteTodo } from '../store/actions/todo-actions'
+// import {createReactContext} from 'react'
 
 require('../assets/style/home.scss')
 
+const StateContext = React.createContext()
 class Home extends Component {
     constructor(props) {
         super(props)
@@ -60,6 +62,7 @@ class Home extends Component {
     }
     render() {
         const todoList = this.props.todoList
+        // const posts = this.props.posts
         // const addButton = <div className="sub" onClick={() => this.addTodoClick()}>Add</div>
         const canAddButton = this.state.canAdd
         return (
@@ -67,7 +70,9 @@ class Home extends Component {
                 <div className="container">
                     <h2>{this.state.title}</h2>
                     {/* {posts.map(item => (
-                        <TodoItem key={item.id} text={item.title}></TodoItem>
+                        <StateContext.Provider value = 'yck'>
+                            <TodoItem></TodoItem>
+                        </StateContext.Provider>
                     ))} */}
                     <div className="todos">
                         <ul>
@@ -108,14 +113,22 @@ Home.propTypes = {
       addTodoFunc: PropTypes.func.isRequired,
       deleteTodoFunc: PropTypes.func.isRequired
 }
-
-const mpaStateToProps = (state, ownProps) => {
+/**
+ * 接受state，选择性的返回该组件想要的数据，会当做这个组件的props的一部分传给ui组件，
+ * ownProps的变化也会触发mapStateToProps
+ * @param {object} state store中的state
+ * @param {object} ownProps 自定义的props
+ */
+const mapStateToProps = (state, ownProps) => {
     return {
         posts: state.todoReducers.posts,
         todoList: state.todoReducers.todoList,
     }
 }
-
+/**
+ * 将该组件所需要的action事件传入该组件的props中
+ * @param {function} dispatch 触发action事件
+ */
 const mapDispatchToProps = dispatch => ({
     addTodoFunc: (a, b) => {
         dispatch(addTodo(a, b))
@@ -129,4 +142,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 //通过connect组件和redux数据，传递state数据和dispatch方法
-export default connect(mpaStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
