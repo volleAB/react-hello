@@ -3,6 +3,7 @@ import Route from './router'
 import { connect } from 'react-redux'
 import { addToCart, updateCart, deleteFromCart }  from './store/actions/cart-actions'
 
+require ('./assets/icon/iconfont.css')
 require ('./assets/style/common.scss')
 
 class App extends Component {

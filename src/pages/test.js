@@ -48,6 +48,7 @@ class Test extends Component {
         >
           <div className="box" />
         </CSSTransition>
+        <div className="iconfont icon-search"></div>
       </div>
     );
   }
